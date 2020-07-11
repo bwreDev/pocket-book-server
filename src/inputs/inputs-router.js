@@ -10,7 +10,8 @@ const jsonParser = express.json();
 const serializeEvent = (input) => ({
   id: input.id,
   title: input.title,
-  amount: xss(input.amount),
+  amount: input.amount,
+  content: xss(input.content),
   date_added: input.date_added,
   user_id: input.user_id,
 });
@@ -27,8 +28,8 @@ inputsRouter
       .catch(next);
   })
   .post(jsonParser, (req, res, next) => {
-    const { title, amount, date_added } = req.body;
-    const newEvent = { title, amount };
+    const { title, amount, content, date_added } = req.body;
+    const newEvent = { title, amount, content };
 
     for (const [key, value] of Object.entries(newEvent))
       if (value == null)
@@ -82,6 +83,7 @@ inputsRouter
     const { amount } = req.body;
     const inputToUpdate = {
       amount,
+      content,
     };
 
     const numberOfValues = Object.values(inputToUpdate).filter(
@@ -90,7 +92,7 @@ inputsRouter
     if (numberOfValues === 0)
       return res.status(400).json({
         error: {
-          message: `Request body must contain 'amount'.`,
+          message: `Request body must contain 'amount' and 'content'.`,
         },
       });
 

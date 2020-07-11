@@ -84,13 +84,13 @@ describe('Inputs Enpoints', function () {
     });
 
     it('creates an input, responding with 201 and the new input', function () {
-      this.retries(3);
       const testUser = testUsers[0];
       const newInput = {
         title: 'income',
         amount: 200.0,
         content: 'Paycheck',
         user_id: testUser.id,
+        date_added: new Date('2029-01-22T16:28:32.615Z'),
       };
       return supertest(app)
         .post('/api/inputs')
