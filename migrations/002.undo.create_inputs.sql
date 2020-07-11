@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS inputs;
+DROP TYPE IF EXISTS input_type;
