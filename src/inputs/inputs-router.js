@@ -7,7 +7,7 @@ const { requireAuth } = require('../middleware/jwt-auth');
 const inputsRouter = express.Router();
 const jsonParser = express.json();
 
-const serializeEvent = (input) => ({
+const serializeInput = (input) => ({
   id: input.id,
   title: input.title,
   amount: input.amount,
@@ -23,30 +23,30 @@ inputsRouter
     const knexInstance = req.app.get('db');
     InputsService.getAllInputs(knexInstance, req.user.id)
       .then((inputs) => {
-        res.json(inputs.map(serializeEvent));
+        res.json(inputs.map(serializeInput));
       })
       .catch(next);
   })
   .post(jsonParser, (req, res, next) => {
     const { title, amount, content, date_added } = req.body;
-    const newEvent = { title, amount, content };
+    const newInput = { title, amount, content };
 
-    for (const [key, value] of Object.entries(newEvent))
+    for (const [key, value] of Object.entries(newInput))
       if (value == null)
         return res.status(400).json({
           error: {
             message: `Missing '${key}' in request body`,
           },
         });
-    newEvent.user_id = req.user.id;
-    newEvent.date_added = date_added;
+    newInput.user_id = req.user.id;
+    newInput.date_added = date_added;
 
-    InputsService.insertEvent(req.app.get('db'), newEvent)
+    InputsService.insertInput(req.app.get('db'), newInput)
       .then((input) => {
         res
           .status(201)
           .location(path.posix.join(req.originalUrl, `/${input.id}`))
-          .json(serializeEvent(input));
+          .json(serializeInput(input));
       })
       .catch(next);
   });
@@ -60,7 +60,7 @@ inputsRouter
         if (!input) {
           return res.status(404).json({
             error: {
-              message: 'Event does not exist',
+              message: 'Input does not exist',
             },
           });
         }
@@ -70,37 +70,10 @@ inputsRouter
       .catch(next);
   })
   .get((req, res, next) => {
-    res.json(serializeEvent(res.input));
+    res.json(serializeInput(res.input));
   })
   .delete((req, res, next) => {
-    InputsService.deleteEvent(req.app.get('db'), req.params.input_id)
-      .then((numRowsAffected) => {
-        res.status(204).end();
-      })
-      .catch(next);
-  })
-  .patch(jsonParser, (req, res, next) => {
-    const { amount } = req.body;
-    const inputToUpdate = {
-      amount,
-      content,
-    };
-
-    const numberOfValues = Object.values(inputToUpdate).filter(
-      Boolean
-    ).length;
-    if (numberOfValues === 0)
-      return res.status(400).json({
-        error: {
-          message: `Request body must contain 'amount' and 'content'.`,
-        },
-      });
-
-    InputsService.updateEvent(
-      req.app.get('db'),
-      req.params.input_id,
-      inputToUpdate
-    )
+    InputsService.deleteInput(req.app.get('db'), req.params.input_id)
       .then((numRowsAffected) => {
         res.status(204).end();
       })
