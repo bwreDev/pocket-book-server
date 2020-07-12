@@ -3,7 +3,6 @@ const InputsService = {
     return knex.from('inputs').select('*').where('user_id', user_id);
   },
   getById(knex, id) {
-    console.log(id, 'id is');
     return knex
       .from('inputs')
       .select('*')
