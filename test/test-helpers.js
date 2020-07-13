@@ -106,7 +106,7 @@ function makeMaliciousInput(user) {
   const expectedInput = {
     ...makeExpectedInput([user], maliciousInput),
     title: 'income',
-    amount: 250.34,
+    amount: '250.34',
     content: `Bad image <img src="https://url.to.file.which/does-not.exist">. But not <strong>all</strong> bad.`,
   };
   return {

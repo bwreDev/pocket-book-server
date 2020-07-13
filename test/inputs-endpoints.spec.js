@@ -80,7 +80,7 @@ describe('Inputs Enpoints', function () {
 
   describe('POST /api/inputs', () => {
     beforeEach('insert users', () => {
-      helpers.seedUsers(db, testUsers);
+      return helpers.seedUsers(db, testUsers);
     });
 
     it('creates an input, responding with 201 and the new input', function () {
