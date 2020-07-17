@@ -1,4 +1,8 @@
-# Pocket Book Server
+## Pocket Book Server
+
+This is the Express server API for my app Pocket Book.
+Client can be found here [pocket-book-client](https://github.com/cbonner26118/pocket-book-client)
+Live app can be found here [https://pocket-book-client.vercel.app/](https://pocket-book-client.vercel.app/)
 
 ## Tech
 
