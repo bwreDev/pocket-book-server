@@ -4,6 +4,110 @@ This is the Express server API for my app Pocket Book.
 Client can be found here [pocket-book-client](https://github.com/cbonner26118/pocket-book-client)
 Live app can be found here [https://pocket-book-client.vercel.app/](https://pocket-book-client.vercel.app/)
 
+## API Overview
+
+```
+/api
+.
+├── /auth
+│   └── POST
+│       ├── /login
+│       └── /refresh
+├── /users
+│   └── POST
+│       └── /
+├── /inputs
+│   └── GET
+│       ├── /
+│       ├── /:input_id/
+│   └── POST
+│       ├── /
+│   └── DELETE
+|       ├── /:input_id/
+```
+
+## POST `/api/auth/login
+
+```
+//req.body
+{
+    username: "String",
+    password: "String"
+}
+
+//res.body
+{
+    authToken: "String"
+}
+```
+
+## POST `/api/auth/refresh`
+
+```
+//req.header
+Authorization: Bearer ${token}
+
+//res.body
+{
+    authToken: ${token}
+}
+```
+
+## POST /api/users
+
+```
+//req.body
+{
+    first_name: "String",
+    last_name: "String",
+    username: "String",
+    password: "String"
+}
+```
+
+## GET `/api/inputs`
+
+```
+//res.body
+[
+    {
+        id: Number,
+        title: "String",
+        amount: "String",
+        content: "String",
+        date_added: "String",
+        user_id: Number
+    }
+]
+```
+
+## POST `/api/inputs`
+
+```
+//req.body
+{
+    title: "String",
+    content: "String",
+    amount: "String"
+}
+//res.body
+{
+    id: Number,
+    title: "String",
+    amount: "String",
+    content: "String",
+    date_added: "String",
+    user_id: Number
+}
+```
+
+## DELETE `/api/inputs/:input_id`
+
+```
+//req.header
+Authorization: Bearer ${token}
+```
+
 ## Tech
 
 This back end is built using Node.js, Express, and PostgreSQL
