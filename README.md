@@ -26,7 +26,7 @@ Live app can be found here [https://pocket-book-client.vercel.app/](https://pock
 |       ├── /:input_id/
 ```
 
-## POST `/api/auth/login
+## POST `/api/auth/login`
 
 ```
 //req.body
@@ -53,7 +53,7 @@ Authorization: Bearer ${token}
 }
 ```
 
-## POST /api/users
+## POST `/api/users`
 
 ```
 //req.body
